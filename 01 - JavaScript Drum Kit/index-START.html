@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>JS Drum Kit</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js"></script>
+  <link rel="stylesheet" href="style.css"> <!--
+
+
+  <script src="script.js"></script>   -->
 </head>
 <body>
 
@@ -28,7 +30,7 @@
     </div>
     <div data-key="71" class="key">
       <kbd>G</kbd>
-      <span class="sound">boom</span>
+      <span class="sound">boom</span>f
     </div>
     <div data-key="72" class="key">
       <kbd>H</kbd>
@@ -58,10 +60,24 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
-
-</script>
-
+    <script>
+    window.addEventListener('keydown', playSound);
+    function playSound(e) {
+      const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+      const key = document.querySelector(`.key[data-key="${e.keyCode}"]`);
+      if(!audio) return; //stop the function
+      audio.currentTime = 0;
+      audio.play();
+      key.classList.add('playing');
+    }
+  
+  function removeTransition(e) {
+      if(e.propertyName !== 'transform') return;
+      this.classList.remove('playing');
+  }
+  
+  const keys = document.querySelectorAll('.key');
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition));</script>
 
 </body>
 </html>
