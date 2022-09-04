@@ -40,26 +40,55 @@
     console.log(inventors.filter(inventor => inventor['year'] < 1600 && inventor['year'] >= 1500));
     // Array.prototype.map()
     // 2. Give us an array of the inventors first and last names
-  console.table(inventors.map(inventor => `${inventor['first']} + ${inventor['last']}`))
+    console.table(inventors.map(inventor => `${inventor['first']} + ${inventor['last']}`))
     // Array.prototype.sort()
     // 3. Sort the inventors by birthdate, oldest to youngest
-
+    console.table(inventors.sort(function(a, b) {
+      if(a.year > b.year) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }))
+    //better syntax using arrow function and ternary operator
+    console.table(inventors.sort((a, b) => a.year > b.year ? 1 : -1));
     // Array.prototype.reduce()
     // 4. How many years did all the inventors live all together?
-
+    const totalYears = inventors.reduce((total, inventor) => {
+      return total + (inventor.passed - inventor.year);
+    }, 0); //the zero at the end is because "total" is initially equal to undefined
+    console.log(totalYears)
     // 5. Sort the inventors by years lived
-
+    const oldest = inventors.sort(function(a, b) {
+      const lastGuy = a.passed - a.year;
+      const nextGuy = b.passed - b.year;
+      return lastGuy > nextGuy ? -1: 1;
+    });
+    console.log(oldest);
+    
     // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
     // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+    
+    //type into console (commented out so they don't error when running in live server)
 
+    //var groups = document.querySelectorAll('mw-category-group a');
+    //const boulevards = Array.from(groups);
+    //let boulevardNames = boulevards.map(boulevard => boulevard.innerText);
+    //let boulevardsWithDe = boulevardNames.filter(boulevard => boulevard.includes("de"));
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
-
+    console.log(people.sort())
     // 8. Reduce Exercise
     // Sum up the instances of each of these
     const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+    console.table(data.reduce(function(obj, item) {
+      if(!obj[item]) {
+        obj[item] = 0;
+      }
+      obj[item]++;
+      return obj;
+    }, {}));
   </script>
 </body>
 </html>
